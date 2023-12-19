@@ -7,7 +7,11 @@
       (async() => {
         const response = await fetch('hello.wasm');
         const bytes = await response.arrayBuffer();
-        const { instance } = await WebAssembly.instantiate(bytes);
+        const { instance } = await WebAssembly.instantiate(bytes, {
+          env: {
+            klog: console.log
+          }
+        });
 
         console.log('The answer is: ' + instance.exports.add(1, 2));
       })();
